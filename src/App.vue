@@ -1,28 +1,51 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+      <!-- 做一个导航 -->
+      <navlist></navlist>
+      <!-- {{this.$route.meta}} -->
+      <!-- {{$route.meta}} -->
+      <keep-alive>
+        <transition name="bounce">
+          <router-view v-if="this.$route.meta.isCache"></router-view>
+        </transition>
+      </keep-alive>
+      <transition name="bounce">
+        <router-view v-if="!this.$route.meta.isCache"></router-view>
+      </transition>
+  </div>  
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
 
+<script>
+import navlist from "@/common/navlist.vue"
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    navlist
   }
 }
 </script>
 
-<style>
+<style >
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+}
+
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
